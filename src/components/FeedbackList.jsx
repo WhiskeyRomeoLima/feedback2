@@ -1,16 +1,19 @@
 import FeedbackItem from './FeedbackItem'
 
-function FeedbackList({ feedback }) {
-  console.log({feedback})
+function FeedbackList({ feedback, handleDelete }) {
 
   if (!feedback || feedback.length === 0) {
-    return <p>No Feedback Yet</p>
+    return <p>Be the first to review!</p>
   }
 
   return (
     <div className='feedback-list'>
       {feedback.map((item) => (
-        <div>{item.rating}</div>
+        <FeedbackItem key = 
+            {item.id} 
+            item={item} 
+            handleDelete = {handleDelete}
+        />   
       ))}
     </div>
   )
