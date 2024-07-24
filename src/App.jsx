@@ -5,6 +5,7 @@ import FeedbackList from './components/FeedbackList'
 import FeedbackData from './data/feedbackData'
 import FeedbackStats from './components/FeedbackStats'
 import FeedbackForm from './components/FeedbackForm'
+import {v4 as uuidv4 } from 'uuid'
 
 // app.jsx -> FeedbackStats -> FeedbackList({feedback, handleDelete}) -> FeedbackItem({item,handleDelete})
 // FeedbackStats displays the number of current reviews and their average
@@ -14,6 +15,12 @@ import FeedbackForm from './components/FeedbackForm'
 
 function App() {
   const [feedback, setFeedback] = useState(FeedbackData)
+
+  const addFeedback = (newFeedback) => {
+    newFeedback.id = uuidv4()
+    console.log(newFeedback)
+    setFeedback([newFeedback, ...feedback]) // We cannot mutate state, so we create a new array and populate as indicated (spread operator ...)
+  }
 
   const deleteFeedback = (id) => {
     if (window.confirm('Confirm delete')) {
@@ -25,7 +32,7 @@ function App() {
     <>
       <Header text={true} />
       <div className="container">
-        <FeedbackForm/>
+        <FeedbackForm handleAddFeedback = {addFeedback}/>
         <FeedbackStats feedback={feedback} />
         <FeedbackList 
           feedback={feedback}

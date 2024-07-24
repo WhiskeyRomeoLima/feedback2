@@ -3,7 +3,7 @@ import Card from './shared/Card'
 import Button from './shared/Button'
 import RatingSelect from './RatingSelect'
 
-function FeedbackForm(onSubmit={handleSubmit}) {
+function FeedbackForm({handleAddFeedback}) {
     const[text, setText] = useState('')
     const[rating, setRating] = useState(10)
     const [btnDisabled, setBtnDisabled] = useState(true)
@@ -23,16 +23,29 @@ function FeedbackForm(onSubmit={handleSubmit}) {
         }
 
         setText(value)
-    
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (text.trim().length > 10) {
+            const newFeedback = {
+                text,
+                rating,
+            }
+            handleAddFeedback(newFeedback)
+            setText('')
+        }
+    }
+
+
     // Note how isDisabled is not an attribute of a html button (it is a prop).  
     // But we use it to set the disabled attribute. 
     // (see Button component)
     return (
         <Card>
-            <form>
+            <form onSubmit={handleSubmit}>
             <h2>Please rate your service with us?</h2>
-            <RatingSelect />
+            <RatingSelect select={(rating) => setRating(rating)} />
             <div className='input-group'>
                     <input onChange={handleTextChange} 
                     type='text' 
