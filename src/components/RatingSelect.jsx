@@ -1,15 +1,55 @@
 import { useState } from 'react'
 
-function RatingSelect({ select }) {
-  const [selected, setSelected] = useState(10)
+//* Changes made to be able to simplify Rating Selelct.
+//* Added selected to props, so both select and selected are passed in from FeedbackForm which are
+//* sent as select={setRating} selected={rating.
+//* Eliminates local state 
+function RatingSelect({ select, selected }) {
+  //* const [selected, setSelected] = useState(10)
 
   const handleChange = (e) => {
-    setSelected(+e.currentTarget.value)
+    //*setSelected(+e.currentTarget.value) }
     select(+e.currentTarget.value)
   }
 
   return (
     <ul className='rating'>
+    {Array.from({ length: 10 }, (_, i) => (
+      <li key={`rating-${i + 1}`}> {/* make key start from 1 */}
+        <input
+          type='radio'
+          id={`num${i + 1}`}
+          name='rating'
+          value={i + 1}
+          onChange={handleChange}
+          checked={selected === i + 1}
+        />
+        <label htmlFor={`num${i + 1}`}>{i + 1}</label>
+      </li>
+    ))}
+  </ul>
+  )
+}
+
+export default RatingSelect
+/*
+Using arrow functions and Array.from()
+
+// Using an arrow function as the map function to
+// manipulate the elements
+Array.from([1, 2, 3], (x) => x + x);
+// [2, 4, 6]
+
+// Generate a sequence of numbers
+// Since the array is initialized with `undefined` on each position,
+// the value of `v` below will be `undefined`
+Array.from({ length: 5 }, (v, i) => i);
+// [0, 1, 2, 3, 4]
+
+*/
+
+/* Replaced by Array.from
+   <ul className='rating'>
       <li>
         <input
           type='radio'
@@ -121,7 +161,5 @@ function RatingSelect({ select }) {
         <label htmlFor='num10'>10</label>
       </li>
     </ul>
-  )
-}
 
-export default RatingSelect
+*/
