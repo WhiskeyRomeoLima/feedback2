@@ -37,10 +37,8 @@ function FeedbackForm({handleAddFeedback}) {
         }
     }
 
-
-    // Note how isDisabled is not an attribute of a html button (it is a prop).  
-    // But we use it to set the disabled attribute. 
-    // (see Button component)
+    // Note in Button how isDisabled is not an attribute of a html button (it is a prop).  
+    // But we use it to set the disabled attribute (see Button component in shared folder). 
     return (
         <Card>
             <form onSubmit={handleSubmit}>
@@ -54,9 +52,9 @@ function FeedbackForm({handleAddFeedback}) {
                     value={text} />
 
                     <Button 
-                    type='submit' 
-                    isDisabled={btnDisabled}  
-                    version='primary'>
+                        type='submit' 
+                        isDisabled={btnDisabled}  
+                        version='primary'>
                         Submit Review
                     </Button>
             </div>

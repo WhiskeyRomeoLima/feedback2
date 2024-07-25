@@ -2,8 +2,13 @@ import Card from './shared/Card'
 import {FaTimes} from 'react-icons/fa'
   
 function FeedbackItem({item, handleDelete}) {
-
-  // The two divs in Card are the children of Card
+/* an item
+    {
+      id: 1,
+      rating: 10,
+      text: 'Lorem ipsum dolor ...',
+    },
+*/
   return (
     <Card>
       <div className='num-display'>{item.rating}</div>

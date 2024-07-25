@@ -1,17 +1,25 @@
 import { useState} from 'react'
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import './App.css'
 import Header from './components/Header'
 import FeedbackList from './components/FeedbackList'
 import FeedbackData from './data/feedbackData'
 import FeedbackStats from './components/FeedbackStats'
 import FeedbackForm from './components/FeedbackForm'
+import AboutPage from './pages/AboutPage'
 import {v4 as uuidv4 } from 'uuid'
 
-// app.jsx -> FeedbackStats -> FeedbackList({feedback, handleDelete}) -> FeedbackItem({item,handleDelete})
+// app.jsx -> (FeedbackForm -> RatingSelect) -> FeedbackStats -> FeedbackList({feedback, handleDelete}) -> FeedbackItem({item,handleDelete})
+// FeedbackForm supports adding, enforces minimum length of reviews.
+//    It adds a new review with selected rating (a new FeedbackItem)
 // FeedbackStats displays the number of current reviews and their average
-// handleDelete is set equal to deleteFeedback function and passed down as indicated above
-// FeedbackList renders FeedbackItem component for each item (feedback)
-// FeebackItem renders the feedback number and text.  Displays button to delete a feedback.
+// FeedbackList: 
+//    Takes in feedback (initialized in app.jsx) renders html ul list of reviews (FeedbackItems)
+//    Takes in handleDelete (app.jsx) and passes it to each FeebackItem
+//    FeedbackList renders FeedbackItem component for each item in feedback
+// FeedbackItem renders the feedback number and text. 
+//    Displays button (x) to delete a feedback.
+//    FeedItem is where the actual deletion occurs.
 
 function App() {
   const [feedback, setFeedback] = useState(FeedbackData)
@@ -27,19 +35,27 @@ function App() {
       setFeedback(feedback.filter((item) => item.id != id))      
     }
   }
-
+  // exact:  use to prevent both '/' and '/about' being loaded on the same UI
   return (
+    <Router> 
     <>
       <Header text={true} />
       <div className="container">
-        <FeedbackForm handleAddFeedback = {addFeedback}/>
-        <FeedbackStats feedback={feedback} />
-        <FeedbackList 
-          feedback={feedback}
-          handleDelete={deleteFeedback}
-        />
+        <Routes>
+          <Route exact path ='/' element = 
+            {
+                <>
+                  <FeedbackForm handleAddFeedback = {addFeedback}/>
+                  <FeedbackStats feedback={feedback} />
+                  <FeedbackList feedback={feedback} handleDelete={deleteFeedback}/>            
+                </>
+            }>
+          </Route>
+          <Route path='/about' element={<AboutPage />} />          
+        </Routes>
       </div>
     </>
+    </Router>
   )
 }
 
