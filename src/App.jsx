@@ -7,7 +7,9 @@ import FeedbackData from './data/feedbackData'
 import FeedbackStats from './components/FeedbackStats'
 import FeedbackForm from './components/FeedbackForm'
 import AboutPage from './pages/AboutPage'
+import AboutLink from './components/AboutLink'
 import {v4 as uuidv4 } from 'uuid'
+import Post from './components/Post'
 
 // app.jsx -> (FeedbackForm -> RatingSelect) -> FeedbackStats -> FeedbackList({feedback, handleDelete}) -> FeedbackItem({item,handleDelete})
 // FeedbackForm supports adding, enforces minimum length of reviews.
@@ -51,9 +53,13 @@ function App() {
                 </>
             }>
           </Route>
-          <Route path='/about' element={<AboutPage />} />          
+          <Route path='/about' element={<AboutPage />} />
+         {/* { teaching useParams, Navigate, useNavigate} */}
+         {/* <Route path='/post/:id' element={<Post/>} />  */}
+         <Route path='/post/*' element={<Post/>} /> 
         </Routes>
       </div>
+      <AboutLink />
     </>
     </Router>
   )
